@@ -12,6 +12,7 @@
 #define FIFOSIZE 128
 #define FIFO "fifo"
 #define MSGSIZE 50
+#define STOPBIND "113"
 
 int main(){
 	pid_t pid;
@@ -75,7 +76,6 @@ int main(){
 	}
 
 
-
 	while(1){
 		while((n=read(c_socket, rcvBuffer, sizeof(rcvBuffer))) != 0){
 			if(n<0)
@@ -92,11 +92,14 @@ int main(){
 				perror("fifo file srtie failed");
 				exit(1);
 			}
-			//close(fd);
-		}
+		}			
 		close(fd);
 		close(c_socket);
+		if(strcmp(rcvBuffer,STOPBIND) == 0){
+			break;	
+		}
 	}
+	printf("Stop Bind\n");
 	close(s_socket);
 	return 0;
 }
