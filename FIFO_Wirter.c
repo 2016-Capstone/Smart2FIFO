@@ -10,7 +10,7 @@
 #include <errno.h>
 
 #define FIFOSIZE 128
-#define FIFO "fifo"
+#define FIFO "fifo_cmd"
 #define MSGSIZE 50
 
 int main(){
