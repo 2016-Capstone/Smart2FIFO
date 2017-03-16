@@ -33,37 +33,37 @@ int main(){
 	s_socket = socket(PF_INET, SOCK_STREAM, 0);
 
 	memset(&s_addr, 0, sizeof(s_addr));
-	s_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	s_addr.sin_addr.s_addr = inet_addr("210.125.31.34");
 	s_addr.sin_family = AF_INET;
-	s_addr.sin_port = htons(3001);
-
+	s_addr.sin_port = htons(443);
+/*
 	if(mkfifo(FIFO, 0666)==-1){
 		if(errno != 17){
 			exit(1);
 		}
-	}
-	if((fd=open(FIFO, O_WRONLY))==-1){
+	}*/
+/*	if((fd=open(FIFO, O_WRONLY))==-1){
 		perror("fifo file open failed");
 		exit(1);
 	}
-
-	if(bind(s_socket, (struct sockaddr*)&s_addr, sizeof(s_addr)) == -1){
+*/
+	if(connect(s_socket, (struct sockaddr*)&s_addr, sizeof(s_addr)) == -1){
 		printf("Can not Bind\n");
 		return -1;
 	}
 
-	if(listen(s_socket, 5) == -1){
+/*	if(listen(s_socket, 5) == -1){
 		printf("listen Fail\n");
 		return -1;
 	}
-
+*/
 	len = sizeof(c_addr);
-	c_socket = accept(s_socket, (struct sockaddr*)&c_addr, &len);    
+//	c_socket = accept(s_socket, (struct sockaddr*)&c_addr, &len);    
 
 	memset(rcvBuffer, 0, BUFSIZ); 
 	send(c_socket, cnntmsg, strlen(cnntmsg), 0);
 
-	if(mkfifo(FIFO, 0666)==-1){
+/*	if(mkfifo(FIFO, 0666)==-1){
 		if(errno != 17){
 			exit(1);
 		}
@@ -73,7 +73,7 @@ int main(){
 		perror("fifo file open failed");
 		exit(1);
 	}
-
+*/
 	while(1){
 		while((n=read(c_socket, rcvBuffer, sizeof(rcvBuffer))) != 0){
 			if(n<0)
@@ -86,10 +86,10 @@ int main(){
 			printf("%s", rcvBuffer);
 
 			strcpy(fifoBuf, rcvBuffer);
-			if(write(fd, fifoBuf, FIFOSIZE)==-1){
+/*			if(write(fd, fifoBuf, FIFOSIZE)==-1){
 				perror("fifo file srtie failed");
 				exit(1);
-			}
+			}*/
 		}
 		close(fd);
 		close(c_socket);

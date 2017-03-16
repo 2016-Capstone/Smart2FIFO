@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 
 #define SIZE 128
-#define FIFO "fifo"
+#define FIFO "fifo_cmd"
 
 void main(int argc, char *argv[]){
 	int fd;
