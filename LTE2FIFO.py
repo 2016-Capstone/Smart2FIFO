@@ -25,7 +25,7 @@ while(True) :
         continue
 
     try:
-        c_socket.send('ID=1\n')
+        c_socket.send('DVTYPE=1%%MSGTYPE=3\n')
     except Exception as e :
         continue
 
